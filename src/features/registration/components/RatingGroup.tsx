@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useFormContext } from "../context/FormContext";
+import { useState } from 'react';
+import { useFormContext } from '../context/FormContext';
 
 type Props = {
   category: string;
@@ -16,10 +16,10 @@ const RatingGroup = ({ category, label }: Props) => {
   const hasError = Boolean(errors[category]);
 
   const handleClick = (value: number) => {
-    setRating((prev) => ({ ...prev, [category]: value }));
+    setRating((prev: typeof errors) => ({ ...prev, [category]: value }));
 
     if (hasError) {
-      setErrors((prev) => {
+      setErrors((prev: typeof errors) => {
         const copy = { ...prev };
         delete copy[category];
         return copy;
@@ -28,7 +28,7 @@ const RatingGroup = ({ category, label }: Props) => {
   };
 
   return (
-    <div className={`rating-group ${hasError ? "error-field" : ""}`}>
+    <div className={`rating-group ${hasError ? 'error-field' : ''}`}>
       <p>
         {label} <span className="required">*</span>
       </p>
@@ -37,7 +37,7 @@ const RatingGroup = ({ category, label }: Props) => {
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            className={star <= displayValue ? "star active" : "star"}
+            className={star <= displayValue ? 'star active' : 'star'}
             onMouseEnter={() => setHoverValue(star)}
             onMouseLeave={() => setHoverValue(0)}
             onClick={() => handleClick(star)}
@@ -47,9 +47,7 @@ const RatingGroup = ({ category, label }: Props) => {
         ))}
       </div>
 
-      {hasError && (
-        <small className="error show">{errors[category]}</small>
-      )}
+      {hasError && <small className="error show">{errors[category]}</small>}
     </div>
   );
 };

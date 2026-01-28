@@ -1,5 +1,5 @@
-import React from "react";
-import type { TableRow } from "../types/table";
+import React from 'react';
+import type { TableRow } from '../types/table';
 
 type Props = {
   row: TableRow;
@@ -12,10 +12,11 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
       <div className="modal">
         <div className="modal-header">
           <h3>Ratings Details</h3>
-          <button className="close-btn"  onClick={onClose}>×</button>
+          <button className="close-btn" onClick={onClose}>
+            ×
+          </button>
         </div>
 
-    
         <table className="data-table">
           <thead>
             <tr>
@@ -26,8 +27,8 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
           <tbody>
             {Object.entries(row.ratings).map(([category, value]) => (
               <tr key={category}>
-                <td>{category.replace(/-/g, " ")}</td>
-                <td>{value === 0 ? "N/A" : value}</td>
+                <td>{category.replace(/-/g, ' ')}</td>
+                <td>{value === 0 ? 'N/A' : value}</td>
               </tr>
             ))}
           </tbody>
@@ -53,8 +54,6 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
             )}
           </div>
         </table>
-
-        
       </div>
     </div>
   );

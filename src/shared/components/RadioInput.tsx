@@ -1,5 +1,5 @@
-import { useFormContext } from "../context/FormContext";
-import { nameToFieldName } from "../utils/name-to-field";
+import { useFormContext } from '../../features/registration/context/FormContext';
+import { nameToFieldName } from '../../features/registration/utils/name-to-field';
 
 type Option = {
   id: string;
@@ -20,15 +20,15 @@ const RadioGroup = ({ name, label, options }: Props) => {
 
   const selectedValue = formData[fieldName];
   const hasError = Boolean(errors[fieldName]);
-  console.log(hasError)
+  console.log(hasError);
   const handleChange = (value: string) => {
     console.log(value);
-    setFormData((prev) => ({
+    setFormData((prev: Record<string, string>) => ({
       ...prev,
       [fieldName]: value,
     }));
 
-    setErrors((prev) => {
+    setErrors((prev: Record<string, string>) => {
       const updated = { ...prev };
       delete updated[fieldName];
       return updated;
@@ -36,7 +36,7 @@ const RadioGroup = ({ name, label, options }: Props) => {
   };
 
   return (
-    <div className={`radio-container ${hasError ? "error-field" : ""}`}>
+    <div className={`radio-container ${hasError ? 'error-field' : ''}`}>
       <label className="radio-label">
         {label} <span className="required">*</span>
       </label>

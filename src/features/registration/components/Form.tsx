@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import InputField from "./Input";
-import RadioGroup from "./RadioInput";
-import RatingGroup from "./RatingGroup";
-import RatingStepper from "./RatingStepper";
-import { RATING_CONFIG } from "../constants/rating-config";
-import { validateStep } from "../utils/validate-step";
-import { useFormContext } from "../context/FormContext";
-import { nameToFieldName } from "../utils/name-to-field";
-import { validators } from "../utils/field-validator";
-import type { TableRow } from "../types/table";
+import React, { useEffect } from 'react';
+import InputField from '../../../shared/components/Input';
+import RadioGroup from '../../../shared/components/RadioInput';
+import RatingGroup from './RatingGroup';
+import RatingStepper from './RatingStepper';
+import { RATING_CONFIG } from '../constants/rating-config';
+import { validateStep } from '../utils/validate-step';
+import { useFormContext } from '../context/FormContext';
+import { nameToFieldName } from '../utils/name-to-field';
+import { validators } from '../utils/field-validator';
+import type { TableRow } from '../types/table';
 
 type FormProps = {
   onSubmit: (row: TableRow) => void;
@@ -27,20 +27,18 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
     nextStep,
     prevStep,
     setRating,
-    resetForm, 
+    resetForm,
   } = useFormContext();
 
   const stepConfig = RATING_CONFIG[currentStep];
 
-
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev: typeof formData) => ({ ...prev, [name]: value }));
 
     if (errors[name]) {
-      setErrors(prev => {
+      setErrors((prev: typeof errors) => {
         const copy = { ...prev };
         delete copy[name];
         return copy;
@@ -55,11 +53,9 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
 
     const message = validate(value);
     if (message) {
-      setErrors(prev => ({ ...prev, [name]: message }));
+      setErrors((prev: typeof errors) => ({ ...prev, [name]: message }));
     }
   };
-
-
 
   const handleNext = () => {
     const result = validateStep(currentStep, formData, rating);
@@ -72,8 +68,6 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
     setErrors({});
     nextStep();
   };
-
-
 
   const handleSubmit = () => {
     const result = validateStep(currentStep, formData, rating);
@@ -96,15 +90,13 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       whatToImprove: formData.whatToImprove,
       additionalComment: formData.additionalComment,
       review: formData.review,
-      ratings: rating, 
+      ratings: rating,
     };
 
     onSubmit(row);
-    resetForm();        
-    resetStep();  
+    resetForm();
+    resetStep();
   };
-
- 
 
   useEffect(() => {
     if (!editingRow) return;
@@ -114,13 +106,13 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       email: editingRow.email,
       purchaseDate: editingRow.purchaseDate,
       shoppingMethod: editingRow.shoppingMethod,
-      supportContacted: editingRow.supportContacted==='yes'?'yes':'no',
+      supportContacted: editingRow.supportContacted === 'yes' ? 'yes' : 'no',
       packageContentExperience: editingRow.packageContentExperience,
       recommendationExperience: editingRow.recommendationExperience,
       whatDidYouLike: editingRow.whatDidYouLike,
       whatToImprove: editingRow.whatToImprove,
       additionalComment: editingRow.additionalComment,
-      review: editingRow.review
+      review: editingRow.review,
     });
 
     setRating(editingRow.ratings);
@@ -168,6 +160,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
             onChange={handleInputChange}
             onBlur={handleBlur}
             error={errors.purchaseDate}
+            max={new Date().toISOString().split('T')[0]}
           />
         </div>
 
@@ -175,8 +168,8 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
           label="Shopping Method"
           name="shoppingMethod"
           options={[
-            { id: "1", label: "Online", value: "Online" },
-            { id: "2", label: "Offline", value: "Offline" },
+            { id: '1', label: 'Online', value: 'Online' },
+            { id: '2', label: 'Offline', value: 'Offline' },
           ]}
         />
       </div>
@@ -184,11 +177,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       <RatingStepper currentStep={currentStep} />
 
       {stepConfig.ratings?.map((rate) => (
-        <RatingGroup
-          key={rate.category}
-          category={rate.category}
-          label={rate.label}
-        />
+        <RatingGroup key={rate.category} category={rate.category} label={rate.label} />
       ))}
 
       {stepConfig.radio && (
@@ -200,7 +189,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       )}
 
       {stepConfig.conditionalRatings &&
-        formData.supportContacted === "yes" &&
+        formData.supportContacted === 'yes' &&
         stepConfig.conditionalRatings.map((r) => (
           <RatingGroup key={r.category} category={r.category} label={r.label} />
         ))}
@@ -218,22 +207,20 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
 
           return (
             <div key={ta.name} className="textbox">
-              <label htmlFor={fieldName}>
-                {ta.label}
-              </label>
+              <label htmlFor={fieldName}>{ta.label}</label>
               <textarea
                 key={ta.name}
                 placeholder={ta.label}
                 maxLength={ta.maxlength}
-                value={formData[fieldName] || ""}
+                value={formData[fieldName] || ''}
                 onChange={(e) => {
-                  setFormData((prev) => ({
+                  setFormData((prev: typeof errors) => ({
                     ...prev,
                     [fieldName]: e.target.value,
                   }));
 
                   if (errors[fieldName]) {
-                    setErrors((prev) => {
+                    setErrors((prev: typeof errors) => {
                       const updated = { ...prev };
                       delete updated[fieldName];
                       return updated;
@@ -249,13 +236,9 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       <div className="navigation">
         {currentStep > 0 && <button onClick={prevStep}>Prev</button>}
 
-        {currentStep < RATING_CONFIG.length - 1 && (
-          <button onClick={handleNext}>Next</button>
-        )}
+        {currentStep < RATING_CONFIG.length - 1 && <button onClick={handleNext}>Next</button>}
 
-        {currentStep === RATING_CONFIG.length - 1 && (
-          <button onClick={handleSubmit}>Submit</button>
-        )}
+        {currentStep === RATING_CONFIG.length - 1 && <button onClick={handleSubmit}>Submit</button>}
       </div>
     </div>
   );

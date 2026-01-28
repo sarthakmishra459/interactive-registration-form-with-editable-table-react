@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type ModalProps = {
   title: string;
@@ -7,12 +7,7 @@ type ModalProps = {
   actions?: React.ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = ({
-  title,
-  children,
-  onClose,
-  actions,
-}) => {
+const Modal: React.FC<ModalProps> = ({ title, children, onClose, actions }) => {
   return (
     <div className="modal-overlay">
       <div className="modal">

@@ -1,11 +1,12 @@
-export type FormValues = {
+export type TableRow = {
+  id: string;
   orderNumber: string;
   email: string;
   purchaseDate: string;
   shoppingMethod: string;
-
+  ratings: Record<string, number>;
+  supportContacted?: string;
   packageContentExperience?: string;
-  supportContacted?: "yes" | "no";
   recommendationExperience?: string;
 
   whatDidYouLike?: string;

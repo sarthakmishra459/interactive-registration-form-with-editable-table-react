@@ -1,10 +1,10 @@
-import type { Step } from "../types/step";
-import type { RatingStepperProps } from "../types/step";
+import type { Step } from '../types/step';
+import type { RatingStepperProps } from '../types/step';
 
 const steps: Step[] = [
   {
     id: 0,
-    label: "Product",
+    label: 'Product',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ const steps: Step[] = [
   },
   {
     id: 1,
-    label: "Website",
+    label: 'Website',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ const steps: Step[] = [
   },
   {
     id: 2,
-    label: "Delivery",
+    label: 'Delivery',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@ const steps: Step[] = [
   },
   {
     id: 3,
-    label: "Support",
+    label: 'Support',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -71,11 +71,11 @@ const RatingStepper = ({ currentStep }: RatingStepperProps) => {
       {steps.map((step) => (
         <div
           key={step.id}
-          className={`step ${currentStep === step.id ? "active" : ""}`}
+          className={`step ${currentStep === step.id ? 'active' : ''}`}
           data-step={step.id}
         >
-          <div className={`icon ${currentStep === step.id ? "active" : ""}`}>{step.icon}</div>
-          
+          <div className={`icon ${currentStep === step.id ? 'active' : ''}`}>{step.icon}</div>
+
           <small>{step.label}</small>
         </div>
       ))}

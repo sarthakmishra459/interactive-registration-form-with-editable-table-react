@@ -1,12 +1,10 @@
-import "./App.css";
-import { useState } from "react";
-import Form from "./components/Form";
-import Table from "./components/Table";
-import RatingsModal from "./components/RatingsModal";
-import type { TableRow } from "./types/table";
-import SuccessModal from "./components/SuccessModal";
-import ConfirmDeleteModal from "./components/DeleteModal";
-import Modal from "./components/Modal";
+import '../App.css';
+import { useState } from 'react';
+import Form from '../features/registration/components/Form';
+import Table from '../features/registration/components/Table';
+import RatingsModal from '../features/registration/components/RatingsModal';
+import type { TableRow } from '../features/registration/types/table';
+import Modal from '../shared/components/Modal';
 
 function App() {
   const [rows, setRows] = useState<TableRow[]>([]);
@@ -27,9 +25,7 @@ function App() {
     }
     setRows((prev) => {
       const exists = prev.find((r) => r.id === row.id);
-      return exists
-        ? prev.map((r) => (r.id === row.id ? row : r))
-        : [...prev, row];
+      return exists ? prev.map((r) => (r.id === row.id ? row : r)) : [...prev, row];
     });
     setEditingRow(null);
     setShowSuccess(true);
@@ -58,25 +54,52 @@ function App() {
         />
       </div>
 
-      {viewRow && (
-        <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />
+      {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
+
+      {showSuccess && (
+        <Modal
+          title="Success"
+          onClose={() => setShowSuccess(false)}
+          actions={
+            <button className="primary-btn" onClick={() => setShowSuccess(false)}>
+              OK
+            </button>
+          }
+        >
+          <p>Your feedback has been submitted successfully</p>
+        </Modal>
       )}
-      {showSuccess && <SuccessModal onClose={() => setShowSuccess(false)} />}
+
       {deleteTarget && (
-        <ConfirmDeleteModal
-          onCancel={() => setDeleteTarget(null)}
-          onConfirm={handleConfirmDelete}
-        />
+        <Modal
+          title="Confirm Delete"
+          onClose={() => setDeleteTarget(null)}
+          actions={
+            <>
+              <button onClick={() => setDeleteTarget(null)}>Cancel</button>
+              <button className="danger-btn" onClick={handleConfirmDelete}>
+                Delete
+              </button>
+            </>
+          }
+        >
+          <p>Are you sure you want to delete this record?</p>
+        </Modal>
       )}
       {showDuplicateModal && (
         <Modal
           title="Duplicate Entry"
           onClose={() => setShowDuplicateModal(false)}
           actions={
-            <button className="danger-btn" onClick={() => setShowDuplicateModal(false)}>Ok</button>
+            <button className="danger-btn" onClick={() => setShowDuplicateModal(false)}>
+              Ok
+            </button>
           }
         >
-          <p>This <strong>Order Number</strong> and <strong>Email</strong> combination already exists.</p>
+          <p>
+            This <strong>Order Number</strong> and <strong>Email</strong> combination already
+            exists.
+          </p>
         </Modal>
       )}
     </div>
