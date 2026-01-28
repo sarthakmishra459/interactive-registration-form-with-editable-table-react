@@ -1,5 +1,4 @@
 import type { TableRow } from "../types/table";
-
 type Props = {
   rows: TableRow[];
   onView: (row: TableRow) => void;
@@ -9,7 +8,7 @@ type Props = {
 
 const Table = ({ rows, onView, onEdit, onDelete }: Props) => {
   return (
-    <table id="main-table" className="data-table">
+    <table className="data-table">
       <thead>
         <tr>
           <th>#</th>
@@ -32,16 +31,37 @@ const Table = ({ rows, onView, onEdit, onDelete }: Props) => {
 
         {rows.map((item, index) => (
           <tr key={item.id}>
-            <td>{index + 1}.</td>
+            <td>{index + 1}</td>
             <td>{item.orderNumber}</td>
             <td>{item.email}</td>
             <td>{item.purchaseDate}</td>
             <td>{item.shoppingMethod}</td>
+
             <td>
               <div className="table-actions">
-                <button className="view-btn" onClick={() => onView(item)}>👁</button>
-                <button className="edit-btn" onClick={() => onEdit(item)}>✎</button>
-                <button className="delete-btn" onClick={() => onDelete(item.id)}>🗑</button>
+                <button
+                  className="view-btn"
+                  onClick={() => onView(item)}
+                  title="View ratings"
+                >
+                  👁
+                </button>
+
+                <button
+                  className="edit-btn"
+                  onClick={() => onEdit(item)}
+                  title="Edit"
+                >
+                  ✎
+                </button>
+
+                <button
+                  className="delete-btn"
+                  onClick={() => onDelete(item.id)}
+                  title="Delete"
+                >
+                  🗑
+                </button>
               </div>
             </td>
           </tr>
