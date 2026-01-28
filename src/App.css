@@ -344,7 +344,7 @@ textarea {
   padding: 16px;
 }
 .modal-footer button {
-  border-radius: 16px;
+  border-radius: 12px;
   border: none;
   height: 30px;
 }
