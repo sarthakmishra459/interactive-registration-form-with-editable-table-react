@@ -5,6 +5,7 @@ import Table from '../features/registration/components/Table';
 import RatingsModal from '../features/registration/components/RatingsModal';
 import type { TableRow } from '../features/registration/types/table';
 import Modal from '../shared/components/Modal';
+import ThemeToggle from '../shared/components/ThemeToggle';
 
 function App() {
   const [rows, setRows] = useState<TableRow[]>([]);
@@ -41,6 +42,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <ThemeToggle/>
       <div className="left-container">
         <Form onSubmit={handleSubmit} editingRow={editingRow} />
       </div>
